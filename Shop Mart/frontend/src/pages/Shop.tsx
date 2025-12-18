@@ -116,9 +116,9 @@ const Shop = () => {
   const hasActiveFilters = searchQuery || showDiscounted || showInStock || sortBy !== 'newest';
 
   return (
-    <div className="min-h-screen bg-background pt-20">
+    <div className="min-h-screen bg-background overflow-x-hidden">
       {/* Hero Banner */}
-      <section className="bg-gradient-to-r from-primary via-secondary to-primary py-16 md:py-24">
+      <section className="bg-gradient-to-r from-primary via-secondary to-primary py-16 md:py-24 mt-16 md:mt-20 w-full">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
@@ -139,7 +139,7 @@ const Shop = () => {
       </section>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex gap-8">
+        <div className="flex flex-col lg:flex-row gap-8">
           {/* Mobile Filter Button */}
           <button
             onClick={() => setIsSidebarOpen(true)}
@@ -158,7 +158,7 @@ const Shop = () => {
             <motion.div
               initial={{ x: -300 }}
               animate={{ x: isSidebarOpen ? 0 : -300 }}
-              className="lg:animate-none w-80 lg:w-72 h-full lg:h-auto bg-card lg:bg-transparent p-6 lg:p-0 lg:sticky lg:top-28 overflow-y-auto"
+              className="lg:animate-none w-80 lg:w-72 h-full lg:h-auto bg-card lg:bg-transparent p-6 lg:p-0 lg:sticky lg:top-24 overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between lg:hidden mb-6">

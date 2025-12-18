@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { User, Shield } from 'lucide-react';
 
@@ -42,7 +41,7 @@ const GetStartedSection = () => {
                 Discover thousands of products, exclusive deals, and enjoy a seamless shopping experience.
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
-                <Link to="/register">
+                <a href="http://localhost:3000/users/register">
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
@@ -50,8 +49,8 @@ const GetStartedSection = () => {
                   >
                     Register
                   </motion.button>
-                </Link>
-                <Link to="/login">
+                </a>
+                <a href="http://localhost:3000/users/login">
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
@@ -59,7 +58,7 @@ const GetStartedSection = () => {
                   >
                     Login
                   </motion.button>
-                </Link>
+                </a>
               </div>
             </div>
           </motion.div>
@@ -84,7 +83,7 @@ const GetStartedSection = () => {
                 Manage your store, track orders, and grow your business with our powerful admin tools.
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
-                <Link to="/register?role=admin">
+                <a href="http://localhost:3000/owners/admin-register">
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
@@ -92,8 +91,8 @@ const GetStartedSection = () => {
                   >
                     Register
                   </motion.button>
-                </Link>
-                <Link to="/login?role=admin">
+                </a>
+                <a href="http://localhost:3000/owners/admin">
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
@@ -101,7 +100,7 @@ const GetStartedSection = () => {
                   >
                     Login
                   </motion.button>
-                </Link>
+                </a>
               </div>
             </div>
           </motion.div>

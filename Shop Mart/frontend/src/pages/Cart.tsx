@@ -74,13 +74,13 @@ const Cart = () => {
             <p className="text-muted-foreground mb-8">
               Looks like you haven't added any items yet.
             </p>
-            <Link to="/shop">
+            <Link to="/">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="btn-gradient"
               >
-                Continue Shopping
+                Go to Home
               </motion.button>
             </Link>
           </motion.div>
@@ -141,13 +141,13 @@ const Cart = () => {
                   Proceed to Checkout
                 </motion.button>
 
-                <Link
-                  to="/shop"
+                <a
+                  href="http://localhost:3000/shop"
                   className="flex items-center justify-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
                 >
                   <ArrowLeft className="w-4 h-4" />
                   Continue Shopping
-                </Link>
+                </a>
 
                 {/* Trust Badges */}
                 <div className="mt-6 pt-6 border-t border-border">

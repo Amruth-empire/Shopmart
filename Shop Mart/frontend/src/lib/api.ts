@@ -55,18 +55,10 @@ export const cartAPI = {
 
 // Auth API
 export const authAPI = {
-  login: (email: string, password: string) => apiRequest('/users/login', {
-    method: 'POST',
-    body: JSON.stringify({ email, password }),
-  }),
-  register: (userData: any) => apiRequest('/users/register', {
-    method: 'POST',
-    body: JSON.stringify(userData),
-  }),
+  checkAuth: () => apiRequest('/users/check-auth'),
   logout: () => apiRequest('/users/logout', {
     method: 'GET',
   }),
-  getProfile: () => apiRequest('/users/profile'),
 };
 
 // Orders API

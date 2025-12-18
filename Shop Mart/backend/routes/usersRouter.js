@@ -25,4 +25,39 @@ router.post('/login', loginUser);
 // Logout
 router.get('/logout', logout);
 
+// Check auth status (for frontend integration)
+router.get('/check-auth', async (req, res) => {
+  try {
+    if (!req.cookies.token) {
+      return res.json({ loggedin: false, user: null });
+    }
+
+    const jwt = require('jsonwebtoken');
+    const decoded = jwt.verify(req.cookies.token, process.env.JWT_KEY);
+    
+    let user;
+    if (decoded.role === 'user') {
+      const userModel = require('../models/user-model');
+      user = await userModel.findById(decoded.id).select("-password");
+    } else if (decoded.role === 'owner') {
+      const ownerModel = require('../models/owners-model');
+      user = await ownerModel.findById(decoded.id).select("-password");
+    }
+
+    if (user) {
+      return res.json({ 
+        loggedin: true, 
+        user: { 
+          fullname: user.fullname, 
+          email: user.email 
+        } 
+      });
+    }
+    
+    return res.json({ loggedin: false, user: null });
+  } catch (err) {
+    return res.json({ loggedin: false, user: null });
+  }
+});
+
 module.exports = router;

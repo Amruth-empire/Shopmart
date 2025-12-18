@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Sparkles } from 'lucide-react';
 
@@ -49,7 +48,7 @@ const HeroSection = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
-          <Link to="/shop">
+          <a href="http://localhost:3000/shop">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -58,8 +57,8 @@ const HeroSection = () => {
               Start Shopping
               <ArrowRight className="w-5 h-5" />
             </motion.button>
-          </Link>
-          <Link to="/register">
+          </a>
+          <a href="http://localhost:3000/users/register">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -67,7 +66,7 @@ const HeroSection = () => {
             >
               Join Now
             </motion.button>
-          </Link>
+          </a>
         </motion.div>
 
         {/* Stats */}

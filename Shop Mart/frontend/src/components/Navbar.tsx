@@ -50,12 +50,9 @@ const Navbar = () => {
 
   const navLinks = isLoggedIn
     ? [
-        { path: '/shop', label: 'Shop', icon: ShoppingBag },
         { path: '/cart', label: 'Cart', icon: ShoppingCart },
       ]
-    : [
-        { path: '/shop', label: 'Shop', icon: ShoppingBag },
-      ];
+    : [];
 
   return (
     <motion.nav
@@ -169,15 +166,25 @@ const Navbar = () => {
                 </Link>
               ))}
               {!isLoggedIn && (
-                <Link
-                  to="/register"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="block"
-                >
-                  <button className="w-full btn-gradient text-sm py-3 mt-2">
-                    Get Started
-                  </button>
-                </Link>
+                <>
+                  <a
+                    href="http://localhost:3000/users/login"
+                    className="block"
+                  >
+                    <button className="w-full text-sm py-3 px-4 rounded-xl hover:bg-muted transition-colors flex items-center justify-center gap-2">
+                      <LogIn className="w-4 h-4" />
+                      Login
+                    </button>
+                  </a>
+                  <a
+                    href="http://localhost:3000/users/register"
+                    className="block"
+                  >
+                    <button className="w-full btn-gradient text-sm py-3 mt-2">
+                      Get Started
+                    </button>
+                  </a>
+                </>
               )}
             </div>
           </motion.div>

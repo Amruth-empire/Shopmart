@@ -16,7 +16,7 @@ const adminController = {
       const adminCount = await ownerModel.countDocuments();
       if (adminCount > 0) {
         req.flash('error', 'Admin registration is closed');
-        return res.redirect('/owners/login');
+        return res.redirect('/owners/admin');
       }
   
       const salt = await bcrypt.genSalt(10);
@@ -34,11 +34,11 @@ const adminController = {
       });
       
       // Redirect to admin dashboard after registration
-      res.redirect('/owners/login');
+      res.redirect('/owners/dashboard');
   
     } catch(err) {
       req.flash('error', err.message);
-      res.redirect('/owners/create');
+      res.redirect('/owners/admin-register');
     }
   },
 
@@ -49,7 +49,7 @@ const adminController = {
       
       if(!owner || !(await bcrypt.compare(password, owner.password))) {
         req.flash('error', 'Invalid credentials');
-        return res.redirect('/owners/login');
+        return res.redirect('/owners/admin');
       }
   
       const token = generateToken(owner, 'owner');
@@ -60,11 +60,11 @@ const adminController = {
       });
       
       // Redirect to admin dashboard after login
-      res.redirect('/owners/admin');
+      res.redirect('/owners/dashboard');
   
     } catch(err) {
       req.flash('error', 'Login failed');
-      res.redirect('/owners/login');
+      res.redirect('/owners/admin');
     }
   },
 
@@ -94,7 +94,7 @@ const adminController = {
     } catch(err) {
       console.error('Error fetching products:', err);
       req.flash('error', 'Error loading products');
-      res.redirect('/owners/admin');
+      res.redirect('/owners/dashboard');
     }
   }
   

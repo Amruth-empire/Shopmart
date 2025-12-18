@@ -4,14 +4,14 @@ const adminController = require('../controllers/adminController');
 const isLoggedin = require('../middlewares/isLoggedin');
 
 // Admin Registration
-router.get('/create', adminController.showRegisterForm);
-router.post('/create', adminController.registerAdmin);
+router.get('/admin-register', adminController.showRegisterForm);
+router.post('/admin-register', adminController.registerAdmin);
 
 // Admin Login
-router.get('/login', adminController.showLoginForm);
-router.post('/login', adminController.loginAdmin);
+router.get('/admin', adminController.showLoginForm);
+router.post('/admin', adminController.loginAdmin);
 
 // Admin Dashboard
-router.get('/admin',isLoggedin, adminController.showDashboard);
+router.get('/dashboard', isLoggedin, adminController.showDashboard);
 
 module.exports = router;

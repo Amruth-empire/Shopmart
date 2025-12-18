@@ -4,10 +4,19 @@ const cookieParser = require('cookie-parser');
 const path =require('path');
 const expressSession= require('express-session');
 const flash=require('connect-flash');
+const cors = require('cors');
 
 const db= require('./config/mongoose-connection');
 
 require("dotenv").config();
+
+// CORS configuration
+app.use(cors({
+    origin: process.env.NODE_ENV === 'production' 
+        ? 'https://your-frontend-domain.com' // Update with your production frontend URL
+        : 'http://localhost:8080', // Frontend dev server
+    credentials: true
+}));
 
 const ownersRouter =require('./routes/ownersRouter')
 const productsRouter =require('./routes/productsRouter')
@@ -33,4 +42,6 @@ app.use('/owners',ownersRouter);
 app.use('/users',usersRouter);
 app.use('/products',productsRouter);
 
-app.listen(3000);
+app.listen(3000,()=>{
+    console.log("http://localhost:3000")
+});

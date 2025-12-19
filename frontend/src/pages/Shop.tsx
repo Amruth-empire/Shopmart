@@ -4,10 +4,11 @@ import { Search, SlidersHorizontal, Percent, Check, X, ChevronDown } from 'lucid
 import ProductCard from '@/components/ProductCard';
 import { productsAPI } from '@/lib/api';
 import { useToast } from '@/hooks/use-toast';
+import { BACKEND_URL } from '@/lib/constants';
 
 type SortOption = 'newest' | 'price-low' | 'price-high';
 
-interface Product {
+interface ProductAPI {
   _id: string;
   name: string;
   price: number;
@@ -17,6 +18,17 @@ interface Product {
   textcolor: string;
   imageUrl: string;
   createdAt: string;
+}
+
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  discount: number;
+  bgColor: string;
+  image: string;
+  createdAt: Date;
+  inStock: boolean;
 }
 
 const Shop = () => {
@@ -37,7 +49,18 @@ const Shop = () => {
     try {
       setLoading(true);
       const response = await productsAPI.getAll();
-      setProducts(response.products);
+      // Map API response to Product interface
+      const mappedProducts: Product[] = response.products.map((p: ProductAPI) => ({
+        id: p._id,
+        name: p.name,
+        price: p.price,
+        discount: p.discount,
+        bgColor: p.bgcolor,
+        image: p.imageUrl,
+        createdAt: new Date(p.createdAt),
+        inStock: true, // Default to true, update if backend provides this field
+      }));
+      setProducts(mappedProducts);
     } catch (error: any) {
       toast({
         title: 'Error',
@@ -46,7 +69,7 @@ const Shop = () => {
       });
       // Redirect to login if not authenticated
       if (error.message.includes('Authentication')) {
-        window.location.href = 'http://localhost:3000/users/login';
+        window.location.href = `${BACKEND_URL}/users/login`;
       }
     } finally {
       setLoading(false);
@@ -256,7 +279,18 @@ const Shop = () => {
             {filteredProducts.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredProducts.map((product, index) => (
-                  <ProductCard key={product.id} product={product} index={index} />
+                  <ProductCard 
+                    key={product.id} 
+                    product={{
+                      id: parseInt(product.id) || 0,
+                      name: product.name,
+                      price: product.price,
+                      discount: product.discount,
+                      image: product.image,
+                      bgColor: product.bgColor,
+                    }} 
+                    index={index} 
+                  />
                 ))}
               </div>
             ) : (

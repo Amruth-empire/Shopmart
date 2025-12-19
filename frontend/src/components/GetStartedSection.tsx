@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { User, Shield } from 'lucide-react';
+import { BACKEND_URL } from '@/lib/constants';
 
 const GetStartedSection = () => {
   return (
@@ -41,7 +42,7 @@ const GetStartedSection = () => {
                 Discover thousands of products, exclusive deals, and enjoy a seamless shopping experience.
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
-                <a href="http://localhost:3000/users/register">
+                <a href={`${BACKEND_URL}/users/register`}>
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
@@ -50,7 +51,7 @@ const GetStartedSection = () => {
                     Register
                   </motion.button>
                 </a>
-                <a href="http://localhost:3000/users/login">
+                <a href={`${BACKEND_URL}/users/login`}>
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
@@ -83,7 +84,7 @@ const GetStartedSection = () => {
                 Manage your store, track orders, and grow your business with our powerful admin tools.
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
-                <a href="http://localhost:3000/owners/admin-register">
+                <a href={`${BACKEND_URL}/owners/admin-register`}>
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
@@ -92,7 +93,7 @@ const GetStartedSection = () => {
                     Register
                   </motion.button>
                 </a>
-                <a href="http://localhost:3000/owners/admin">
+                <a href={`${BACKEND_URL}/owners/admin`}>
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}

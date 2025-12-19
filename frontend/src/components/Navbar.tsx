@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingBag, Menu, X, ShoppingCart, User, Package, LogIn, LogOut } from 'lucide-react';
 import { authAPI } from '@/lib/api';
+import { BACKEND_URL } from '@/lib/constants';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -40,7 +41,7 @@ const Navbar = () => {
       await authAPI.logout();
       setIsLoggedIn(false);
       setUser(null);
-      window.location.href = 'http://localhost:3000';
+      window.location.href = BACKEND_URL;
     } catch (error) {
       console.error('Logout failed:', error);
     }
@@ -107,7 +108,7 @@ const Navbar = () => {
               </>
             ) : (
               <>
-                <a href="http://localhost:3000/users/login">
+                <a href={`${BACKEND_URL}/users/login`}>
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
@@ -117,7 +118,7 @@ const Navbar = () => {
                     Login
                   </motion.button>
                 </a>
-                <a href="http://localhost:3000/users/register">
+                <a href={`${BACKEND_URL}/users/register`}>
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
@@ -168,7 +169,7 @@ const Navbar = () => {
               {!isLoggedIn && (
                 <>
                   <a
-                    href="http://localhost:3000/users/login"
+                    href={`${BACKEND_URL}/users/login`}
                     className="block"
                   >
                     <button className="w-full text-sm py-3 px-4 rounded-xl hover:bg-muted transition-colors flex items-center justify-center gap-2">
@@ -177,7 +178,7 @@ const Navbar = () => {
                     </button>
                   </a>
                   <a
-                    href="http://localhost:3000/users/register"
+                    href={`${BACKEND_URL}/users/register`}
                     className="block"
                   >
                     <button className="w-full btn-gradient text-sm py-3 mt-2">

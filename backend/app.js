@@ -13,7 +13,7 @@ require("dotenv").config();
 // CORS configuration
 app.use(cors({
     origin: process.env.NODE_ENV === 'production' 
-        ? 'https://shopmart-bag.vercel.app/' // Update with your production frontend URL
+        ? 'https://shopmart-bag.vercel.app' // Production frontend URL (no trailing slash)
         : ['http://localhost:8080', 'http://localhost:8081', 'http://localhost:8082'], // Frontend dev server
     credentials: true
 }));

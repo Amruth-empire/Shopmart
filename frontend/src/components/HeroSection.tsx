@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, Sparkles } from 'lucide-react';
+import { BACKEND_URL } from '@/lib/constants';
 
 const HeroSection = () => {
   return (
@@ -48,7 +49,7 @@ const HeroSection = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
-          <a href="http://localhost:3000/shop">
+          <a href={`${BACKEND_URL}/shop`}>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -58,7 +59,7 @@ const HeroSection = () => {
               <ArrowRight className="w-5 h-5" />
             </motion.button>
           </a>
-          <a href="http://localhost:3000/users/register">
+          <a href={`${BACKEND_URL}/users/register`}>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}

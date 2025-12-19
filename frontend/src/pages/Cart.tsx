@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingCart, ArrowLeft, Shield, Truck } from 'lucide-react';
 import CartItem from '@/components/CartItem';
 import { products } from '@/data/products';
+import { BACKEND_URL } from '@/lib/constants';
 
 interface CartItemType {
   id: number;
@@ -142,7 +143,7 @@ const Cart = () => {
                 </motion.button>
 
                 <a
-                  href="http://localhost:3000/shop"
+                  href={`${BACKEND_URL}/shop`}
                   className="flex items-center justify-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
                 >
                   <ArrowLeft className="w-4 h-4" />

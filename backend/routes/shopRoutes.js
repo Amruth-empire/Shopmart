@@ -8,11 +8,37 @@ const userModel = require('../models/user-model');
 // GET /shop - Show all products
 router.get("/", isLoggedin, async (req, res) => {
   try {
-    const products = await productModel.find();
+    const { sort, filter } = req.query;
+
+    const findQuery = {};
+    if (filter === 'discounted') {
+      findQuery.discount = { $gt: 0 };
+    } else if (filter === 'available') {
+      // Treat older products (without inStock) as in-stock.
+      findQuery.$or = [{ inStock: true }, { inStock: { $exists: false } }];
+    }
+
+    let sortQuery = { createdAt: -1 };
+    if (sort === 'priceLowHigh') {
+      sortQuery = { price: 1 };
+    } else if (sort === 'priceHighLow') {
+      sortQuery = { price: -1 };
+    } else if (sort === 'discountHighLow') {
+      sortQuery = { discount: -1 };
+    } else if (sort === 'newest') {
+      sortQuery = { createdAt: -1 };
+    } else if (!sort && filter === 'discounted') {
+      // Default behavior: when viewing only discounted products, show highest discount first.
+      sortQuery = { discount: -1 };
+    }
+
+    const products = await productModel.find(findQuery).sort(sortQuery);
     res.render("shop", {
       products: products,
       loggedin: true,
       role: req.role, 
+      sort: sort || (filter === 'discounted' ? 'discountHighLow' : 'newest'),
+      filter: filter || '',
       success: req.flash("success") || [],
       error: req.flash("error") || []
     });

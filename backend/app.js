@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express =require('express');
 const app =express();
 const cookieParser = require('cookie-parser');
@@ -6,9 +8,7 @@ const expressSession= require('express-session');
 const flash=require('connect-flash');
 const cors = require('cors');
 
-const db= require('./config/mongoose-connection');
-
-require("dotenv").config();
+require('./config/mongoose-connection');
 
 // CORS configuration
 app.use(cors({

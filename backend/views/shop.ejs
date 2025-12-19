@@ -26,6 +26,7 @@
             onchange="this.form.submit()"
           >
             <option value="newest" <%= typeof sort !== 'undefined' && sort === 'newest' ? 'selected' : '' %>>Newest First</option>
+            <option value="discountHighLow" <%= typeof sort !== 'undefined' && sort === 'discountHighLow' ? 'selected' : '' %>>Highest Discount</option>
             <option value="priceLowHigh" <%= typeof sort !== 'undefined' && sort === 'priceLowHigh' ? 'selected' : '' %>>Price: Low to High</option>
             <option value="priceHighLow" <%= typeof sort !== 'undefined' && sort === 'priceHighLow' ? 'selected' : '' %>>Price: High to Low</option>
           </select>

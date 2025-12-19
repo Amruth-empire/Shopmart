@@ -5,6 +5,7 @@ import ProductCard from '@/components/ProductCard';
 import { productsAPI } from '@/lib/api';
 import { useToast } from '@/hooks/use-toast';
 import { BACKEND_URL } from '@/lib/constants';
+import { useSearchParams } from 'react-router-dom';
 
 type SortOption = 'newest' | 'price-low' | 'price-high';
 
@@ -32,6 +33,7 @@ interface Product {
 }
 
 const Shop = () => {
+  const [searchParams] = useSearchParams();
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState<SortOption>('newest');
   const [showDiscounted, setShowDiscounted] = useState(false);
@@ -40,6 +42,18 @@ const Shop = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
+
+  // Read URL parameters on mount
+  useEffect(() => {
+    const sortParam = searchParams.get('sort');
+    if (sortParam === 'priceLowHigh') {
+      setSortBy('price-low');
+    } else if (sortParam === 'priceHighLow') {
+      setSortBy('price-high');
+    } else if (sortParam === 'newest') {
+      setSortBy('newest');
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     fetchProducts();
@@ -105,7 +119,7 @@ const Shop = () => {
 
     // Discount filter
     if (showDiscounted) {
-      result = result.filter((p) => p.discount);
+      result = result.filter((p) => p.discount > 0);
     }
 
     // Stock filter
@@ -127,7 +141,7 @@ const Shop = () => {
     }
 
     return result;
-  }, [searchQuery, sortBy, showDiscounted, showInStock]);
+  }, [products, searchQuery, sortBy, showDiscounted, showInStock]);
 
   const clearFilters = () => {
     setSearchQuery('');
@@ -176,7 +190,13 @@ const Shop = () => {
             className={`fixed lg:relative inset-0 z-50 lg:z-auto bg-background/80 lg:bg-transparent backdrop-blur-sm lg:backdrop-blur-none transition-opacity duration-300 ${
               isSidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none lg:opacity-100 lg:pointer-events-auto'
             }`}
-            onClick={() => setIsSidebarOpen(false)}
+            onClick={(e) => {
+              // Only close when clicking the backdrop itself.
+              // This avoids native <select> interactions being treated as backdrop clicks on mobile.
+              if (e.target === e.currentTarget) {
+                setIsSidebarOpen(false);
+              }
+            }}
           >
             <motion.div
               initial={{ x: -300 }}
@@ -214,7 +234,11 @@ const Shop = () => {
                   </h3>
                   <select
                     value={sortBy}
-                    onChange={(e) => setSortBy(e.target.value as SortOption)}
+                    onClick={(e) => e.stopPropagation()}
+                    onChange={(e) => {
+                      const newSort = e.target.value as SortOption;
+                      setSortBy(newSort);
+                    }}
                     className="input-styled"
                   >
                     <option value="newest">Newest First</option>
@@ -228,6 +252,7 @@ const Shop = () => {
                   <h3 className="font-semibold mb-4">Filters</h3>
                   <div className="space-y-3">
                     <button
+                      type="button"
                       onClick={() => setShowDiscounted(!showDiscounted)}
                       className={`w-full flex items-center gap-3 p-3 rounded-xl transition-all ${
                         showDiscounted
@@ -240,6 +265,7 @@ const Shop = () => {
                       {showDiscounted && <Check className="w-4 h-4 ml-auto" />}
                     </button>
                     <button
+                      type="button"
                       onClick={() => setShowInStock(!showInStock)}
                       className={`w-full flex items-center gap-3 p-3 rounded-xl transition-all ${
                         showInStock
@@ -257,6 +283,7 @@ const Shop = () => {
                 {/* Clear Filters */}
                 {hasActiveFilters && (
                   <button
+                    type="button"
                     onClick={clearFilters}
                     className="w-full flex items-center justify-center gap-2 p-3 rounded-xl border border-destructive text-destructive hover:bg-destructive/10 transition-colors"
                   >

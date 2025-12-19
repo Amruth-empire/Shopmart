@@ -18,6 +18,7 @@ router.post('/create',
         bgcolor: req.body.bgcolor,
         panelcolor: req.body.panelcolor,
         textcolor: req.body.textcolor,
+        inStock: req.body.inStock === undefined ? true : req.body.inStock === 'true',
         image: {
           data: req.file.buffer,
           contentType: req.file.mimetype

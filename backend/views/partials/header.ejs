@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopMart</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/output.css">
+</head>
+<body class="font-['helvetica_now_display']">
+  <% if (typeof error !== 'undefined' && error.length > 0) { %>
+    <div class="absolute top-5 left-1/2 -translate-x-1/2 p-3 rounded-md bg-red-500 text-white">
+      <%= error %>
+    </div>
+  <% } %>
+      
+    <nav class="w-full flex justify-between px-5 py-3 bg-white shadow">
+        <a href="/" class="text-xl font-bold text-blue-600">ShopMart</a>
+        <% if (typeof loggedin !== 'undefined' && loggedin) { %>
+          <div class="flex gap-5 items-center">
+            <% if (role === 'user') { %>
+              <a href="/shop" class="hover:text-blue-600">Shop</a>
+              <a href="/cart" class="hover:text-blue-600">Cart</a>
+            <% } else if (role === 'owner') { %>
+              <a href="/owners/admin" class="hover:text-blue-600">Dashboard</a>
+            <% } %>
+            <a href="/logout" class="text-red-600 hover:text-red-700">Logout</a>
+          </div>
+        <% } %>
+      </nav>

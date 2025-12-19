@@ -1,0 +1,88 @@
+<%- include('./partials/header') %>
+<div class="min-h-screen bg-gray-50 p-8">
+  <h1 class="text-3xl font-bold mb-8">Your Orders</h1>
+
+  <% if (!orders || orders.length === 0) { %>
+    <div class="text-center py-12">
+      <p class="text-xl text-gray-500">You haven't placed any orders yet</p>
+      <a href="/shop" class="mt-4 inline-block px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+        Start Shopping
+      </a>
+    </div>
+  <% } else { %>
+    <div class="flex"> <!-- Added flex container -->
+      <!-- Orders List (Left Side) -->
+      <div class="w-1/2 pr-4"> <!-- Half width with right padding -->
+        <div class="space-y-6">
+          <% orders.forEach(order => { %>
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+              <div class="p-6 border-b">
+                <div class="flex justify-between items-center">
+                  <div>
+                    <h2 class="text-xl font-semibold">Order #<%= order._id.toString().slice(-6).toUpperCase() %></h2>
+                    <p class="text-gray-500">Placed on <%= order.createdAt.toLocaleDateString() %></p>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-lg font-bold">₹<%= order.totalAmount.toFixed(2) %></p>
+                    <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">
+                      <%= order.paymentStatus %>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-6">
+                <% order.items.forEach(item => { %>
+                  <% if (item.product) { %>
+                    <div class="flex items-center mb-4">
+                      <% if (item.product.image && item.product.image.data) { %>
+                        <img src="data:image/<%= item.product.image.contentType %>;base64,<%= item.product.image.data.toString('base64') %>" 
+                             alt="<%= item.product.name %>"
+                             class="w-16 h-16 object-cover rounded mr-4">
+                      <% } else { %>
+                        <div class="w-16 h-16 bg-gray-100 rounded mr-4 flex items-center justify-center">
+                          <span class="text-gray-400 text-xs">No Image</span>
+                        </div>
+                      <% } %>
+                      
+                      <div class="flex-1">
+                        <h3 class="font-medium"><%= item.product.name %></h3>
+                        <div class="flex justify-between mt-1">
+                          <span class="text-gray-600">₹<%= item.price.toFixed(2) %> × <%= item.quantity %></span>
+                          <span class="font-medium">₹<%= (item.price * item.quantity).toFixed(2) %></span>
+                        </div>
+                        <% if (item.discount > 0) { %>
+                          <div class="text-sm text-green-500">
+                            Saved ₹<%= (item.discount * item.quantity).toFixed(2) %>
+                          </div>
+                        <% } %>
+                      </div>
+                    </div>
+                  <% } else { %>
+                    <div class="flex items-center mb-4 p-3 bg-gray-50 rounded">
+                      <div class="w-16 h-16 bg-gray-200 rounded mr-4 flex items-center justify-center">
+                        <span class="text-gray-500 text-xs">Product unavailable</span>
+                      </div>
+                      <div class="flex-1">
+                        <h3 class="font-medium text-gray-500">[Product no longer available]</h3>
+                        <div class="text-sm text-gray-400">
+                          Quantity: <%= item.quantity %>
+                        </div>
+                      </div>
+                    </div>
+                  <% } %>
+                <% }); %>
+              </div>
+            </div>
+          <% }); %>
+        </div>
+      </div>
+
+      <!-- Right Side (Empty for now) -->
+      <div class="w-1/2 pl-4">
+        <!-- You can add content here later if needed -->
+      </div>
+    </div>
+  <% } %>
+</div>
+<%- include('./partials/footer') %>

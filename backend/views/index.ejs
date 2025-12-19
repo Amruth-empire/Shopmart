@@ -1,0 +1,55 @@
+<%- include('./partials/header') %>
+
+<% if (typeof error !== 'undefined' && error.length > 0) { %>
+<div class="absolute top-5 left-1/2 -translate-x-1/2 p-3 rounded-md bg-red-500 text-white">
+  <%= error %>
+</div>
+<% } %>
+
+<div class="min-h-screen flex flex-col items-center justify-center bg-gray-50 py-12">
+  <div class="w-full max-w-4xl px-4">
+    <h1 class="text-5xl font-bold text-center text-blue-600 mb-12">Shop Mart</h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+      <!-- Customer Section -->
+      <div class="bg-white p-10 rounded-2xl shadow-xl transition-transform hover:scale-105">
+        <h2 class="text-3xl font-bold mb-8 text-center text-blue-600">Customer</h2>
+        <div class="space-y-6">
+          <a href="/users/register" 
+             class="block w-full px-8 py-4 bg-blue-500 text-white rounded-xl 
+                    hover:bg-blue-600 text-xl font-semibold text-center
+                    transition-colors duration-200">
+            User Registration
+          </a>
+          <a href="/users/login" 
+             class="block w-full px-8 py-4 bg-blue-500 text-white rounded-xl 
+                    hover:bg-blue-600 text-xl font-semibold text-center
+                    transition-colors duration-200">
+            User Login
+          </a>
+        </div>
+      </div>
+
+      <!-- Admin Section -->
+      <div class="bg-white p-10 rounded-2xl shadow-xl transition-transform hover:scale-105">
+        <h2 class="text-3xl font-bold mb-8 text-center text-green-600">Admin</h2>
+        <div class="space-y-6">
+          <a href="/owners/admin-register" 
+             class="block w-full px-8 py-4 bg-green-500 text-white rounded-xl 
+                    hover:bg-green-600 text-xl font-semibold text-center
+                    transition-colors duration-200">
+            Admin Registration
+          </a>
+          <a href="/owners/admin" 
+             class="block w-full px-8 py-4 bg-green-500 text-white rounded-xl 
+                    hover:bg-green-600 text-xl font-semibold text-center
+                    transition-colors duration-200">
+            Admin Login
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('./partials/footer') %>

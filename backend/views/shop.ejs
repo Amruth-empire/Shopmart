@@ -1,0 +1,105 @@
+<%- include('./partials/header') %>
+
+<% if (typeof success !== 'undefined' && success && success.length > 0) { %>
+  <div class="p-4 bg-green-100 text-green-700 text-center">
+    <%= success %>
+  </div>
+<% } %>
+
+<% if (typeof error !== 'undefined' && error && error.length > 0) { %>
+  <div class="p-4 bg-red-100 text-red-700 text-center">
+    <%= error %>
+  </div>
+<% } %>
+
+<div class="min-h-screen bg-gray-50">
+  <div class="flex flex-col md:flex-row gap-8 p-6">
+    <!-- Filters Sidebar -->
+    <div class="w-full md:w-64 space-y-6">
+      <!-- Sorting -->
+      <div class="bg-white p-4 rounded-lg shadow">
+        <h3 class="text-lg font-semibold mb-3">Sort By</h3>
+        <form action="/shop" method="GET">
+          <select 
+            name="sort" 
+            class="w-full p-2 border rounded-md"
+            onchange="this.form.submit()"
+          >
+            <option value="newest" <%= typeof sort !== 'undefined' && sort === 'newest' ? 'selected' : '' %>>Newest First</option>
+            <option value="priceLowHigh" <%= typeof sort !== 'undefined' && sort === 'priceLowHigh' ? 'selected' : '' %>>Price: Low to High</option>
+            <option value="priceHighLow" <%= typeof sort !== 'undefined' && sort === 'priceHighLow' ? 'selected' : '' %>>Price: High to Low</option>
+          </select>
+        </form>
+      </div>
+
+      <!-- Filters -->
+      <div class="bg-white p-4 rounded-lg shadow">
+        <h3 class="text-lg font-semibold mb-3">Filters</h3>
+        <div class="space-y-2">
+          <a href="/shop?filter=discounted" class="block p-2 hover:bg-gray-100 rounded">
+            Discounted Items
+          </a>
+          <a href="/shop?filter=available" class="block p-2 hover:bg-gray-100 rounded">
+            In Stock
+          </a>
+          <a href="/shop" class="block p-2 text-red-500 hover:bg-gray-100 rounded">
+            Clear Filters
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="flex-1">
+      <% if (products && products.length > 0) { %>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <% products.forEach(function(product) { %>
+            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+              <!-- Product Image -->
+              <div class="h-48 flex items-center justify-center" style="background-color: <%= product.bgcolor || '#f8fafc' %>">
+                <% if (product.image && product.image.data) { %>
+                  <img 
+                    class="h-full object-cover"
+                    src="data:image/<%= product.image.contentType %>;base64,<%= product.image.data.toString('base64') %>" 
+                    alt="<%= product.name %>"
+                  >
+                <% } else { %>
+                  <div class="text-gray-400">No Image</div>
+                <% } %>
+              </div>              
+
+              <!-- Product Details -->
+              <div 
+                class="p-4"
+                style="background-color: <%= product.panelcolor || '#ffffff' %>; color: <%= product.textcolor || '#1e293b' %>"
+              >
+                <h3 class="font-semibold text-lg"><%= product.name %></h3>
+                <div class="flex justify-between items-center mt-2">
+                  <div>
+                    <span class="text-xl font-bold">₹<%= product.price %></span>
+                    <% if (product.discount > 0) { %>
+                      <span class="ml-2 text-green-500 line-through">
+                        ₹<%= product.price + product.discount %>
+                      </span>
+                    <% } %>
+                  </div>
+                  <form action="/shop/addtocart/<%= product._id %>" method="POST" class="inline">
+                    <button type="submit" class="p-2 rounded-full bg-white hover:bg-gray-100 shadow">
+                      <i class="ri-add-line"></i>
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      <% } else { %>
+        <div class="text-center py-12 text-gray-500">
+          No products found matching your criteria
+        </div>
+      <% } %>
+    </div>
+  </div>
+</div>
+
+<%- include('./partials/footer') %>

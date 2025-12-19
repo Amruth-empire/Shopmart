@@ -13,12 +13,6 @@ const adminController = {
 
   registerAdmin: async (req, res) => {
     try {
-      const adminCount = await ownerModel.countDocuments();
-      if (adminCount > 0) {
-        req.flash('error', 'Admin registration is closed');
-        return res.redirect('/owners/admin');
-      }
-  
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(req.body.password, salt);
       
@@ -27,14 +21,9 @@ const adminController = {
         password: hashedPassword
       });
   
-      const token = generateToken(owner, 'owner');
-      res.cookie("token", token, {
-        httpOnly: true,
-        maxAge: 1000 * 60 * 60 * 24
-      });
-      
-      // Redirect to admin dashboard after registration
-      res.redirect('/owners/dashboard');
+      // Redirect to login page after successful registration
+      req.flash('success', 'Registration successful! Please login.');
+      res.redirect('/owners/admin');
   
     } catch(err) {
       req.flash('error', err.message);
@@ -71,7 +60,8 @@ const adminController = {
   showLoginForm: (req, res) => {
     res.render('admin-login', {
       loggedin: false,
-      error: req.flash('error') || []
+      error: req.flash('error') || [],
+      success: req.flash('success') || []
     });
   },
  
